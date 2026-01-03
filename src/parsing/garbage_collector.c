@@ -76,10 +76,3 @@ void	is_already_free(t_garbage_collector **gc, void *ptr)
 	}
 	free(ptr);
 }
-
-t_garbage_collector	**gc_instance(void)
-{
-	static t_garbage_collector	*gc = NULL;
-
-	return (&gc);
-}

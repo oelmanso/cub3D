@@ -6,17 +6,25 @@
 /*   By: oelmanso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 10:57:30 by oelmanso          #+#    #+#             */
-/*   Updated: 2025/12/28 10:58:08 by oelmanso         ###   ########.fr       */
+/*   Updated: 2026/01/02 21:55:08 by zhassna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../cub.h"
 
-void	print_error1(char *msg)
+int	ft_size(int c)
 {
-	write(2, "Error\n", 6);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	exit(1);
+	if (c == 1)
+		return (6);
+	return (MINI_TILE);
+}
+
+int	ft_color(int c)
+{
+	if (c == 1)
+		return (0x000080);
+	else if (c == 2)
+		return (0x848482);
+	return (0xFFFFFF);
 }
 
 int	check_texture_path(char *path)

@@ -12,6 +12,33 @@
 
 #include "../cub.h"
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*s3;
+	int		tl;
+	int		i;
+	int		j;
+
+	if (!s1)
+		return (ft_strdup(s2));
+	tl = ft_strlen(s1) + ft_strlen(s2);
+	s3 = malloc(sizeof(char) * tl + 1);
+	if (!s3)
+		return (NULL);
+	gc_add_node_back(gc_instance(), gc_new_node(s3));
+	i = 0;
+	while (s1[i])
+	{
+		s3[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		s3[i++] = s2[j++];
+	s3[i] = '\0';
+	return (s3);
+}
+
 char	*ft_read_buffer(char *remb, int fd)
 {
 	char	*buffer;

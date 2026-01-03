@@ -17,6 +17,12 @@ void	draw_minimap(t_game *g)
 	int	x;
 	int	y;
 
+	if ((MINI_X + (g->width_map * MINI_TILE) >= WIDTH) || (MINI_Y
+			+ (g->length_map * MINI_TILE) >= HEIGHT))
+	{
+		ft_finish(g);
+		print_error1("MINI_TILE is too large");
+	}
 	y = 0;
 	while (y < g->length_map)
 	{
@@ -25,22 +31,26 @@ void	draw_minimap(t_game *g)
 		{
 			if (g->map[y][x] == '1')
 				draw_square(g, MINI_X + x * MINI_TILE, MINI_Y + y * MINI_TILE,
-					MINI_TILE, 0x848482);
+					2);
 			else if (g->map[y][x] == '0')
 				draw_square(g, MINI_X + x * MINI_TILE, MINI_Y + y * MINI_TILE,
-					MINI_TILE, 0xFFFFFF);
+					3);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_square(t_game *g, int x, int y, int size, int color)
+void	draw_square(t_game *g, int x, int y, int c)
 {
 	int	i;
 	int	j;
+	int	size;
+	int	color;
 
 	i = 0;
+	size = ft_size(c);
+	color = ft_color(c);
 	while (i < size)
 	{
 		j = 0;
@@ -58,38 +68,35 @@ void	draw_player_minimap(t_game *g)
 	int	x;
 	int	y;
 
-	x = MINI_X + g->player.posX * MINI_TILE;
-	y = MINI_Y + g->player.posY * MINI_TILE;
-	draw_square(g, x - 2, y - 2, 4, 0x000080);
+	x = MINI_X + g->player.posx * MINI_TILE;
+	y = MINI_Y + g->player.posy * MINI_TILE;
+	draw_square(g, x - 3, y - 3, 1);
 }
 
 void	draw_player_dir(t_game *g)
 {
 	double	len;
-	double	step;
 	double	start_x;
 	double	start_y;
-	double	player_half;
 	int		x;
 	int		y;
 
-	player_half = 3.0 / MINI_TILE;
-	start_x = g->player.posX + g->player.dirX * player_half;
-	start_y = g->player.posY + g->player.dirY * player_half;
+	start_x = g->player.posx + g->player.dirx * (3.0 / MINI_TILE);
+	start_y = g->player.posy + g->player.diry * (3.0 / MINI_TILE);
 	len = 0.0;
-	step = 0.05;
-	while (len < 0.6)
+	while (len < 1)
 	{
-		x = MINI_X + (start_x + g->player.dirX * len) * MINI_TILE;
-		y = MINI_Y + (start_y + g->player.dirY * len) * MINI_TILE;
+		x = MINI_X + (start_x + g->player.dirx * len) * MINI_TILE;
+		y = MINI_Y + (start_y + g->player.diry * len) * MINI_TILE;
 		my_mlx_pixel_put(&g->frame, x, y, 0xD3AE36);
-		len += step;
+		len += 0.05;
 	}
 }
 
 int	render(t_game *g)
 {
-	game_loop(g);
+	key_move(g);
+	raycaster(g);
 	draw_minimap(g);
 	draw_player_minimap(g);
 	draw_player_dir(g);

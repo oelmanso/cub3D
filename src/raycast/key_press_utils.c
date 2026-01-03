@@ -6,23 +6,22 @@
 /*   By: zhassna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 23:42:39 by zhassna           #+#    #+#             */
-/*   Updated: 2025/12/26 23:43:29 by zhassna          ###   ########.fr       */
+/*   Updated: 2026/01/02 21:58:59 by zhassna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int ft_close(t_game *g)
+int	ft_close(t_game *g)
 {
 	ft_finish(g);
 	exit(0);
 	return (0);
 }
+
 void	ft_finish(t_game *g)
 {
-	//(void)g;
-	//Free memory
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -40,9 +39,7 @@ void	ft_finish(t_game *g)
 		mlx_destroy_display(g->frame.mlx);
 		free(g->frame.mlx);
 	}
-	// printf(">>>>>>>>>>>>Exiting the game. Goodbye!\n");
 	free_all(gc_instance());
-	// return (0);
 }
 
 int	key_press(int keycode, t_game *g)
